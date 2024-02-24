@@ -17,8 +17,8 @@ const LogoLink = styled(Link)({
 });
 
 const LogoImg = styled('img')(() => ({ 
-  width: 174,
-  height: 50,
+  width: 100,
+  height: 100,
   marginRight: 10,
 
   "@media (max-width:640px)": {
@@ -38,13 +38,13 @@ const Header = () => {
     <AppBar position="static">
       <Toolbar>
         <LogoLink component={RouterLink} to="/">
-          <LogoImg src={Logo} alt="IOD Blog" />
-          <Typography variant="h6" component="div" sx={{ display: { xs: 'none', sm: 'flex' } }}>IOD Blog Team</Typography>
+          <LogoImg src={Logo} alt="PropertyPro" />
+          <Typography variant="h6" component="div" sx={{ display: { xs: 'none', sm: 'flex' } }}>Property Pro</Typography>
         </LogoLink>
         <nav>
           <HeaderLink component={NavLink} to="/">Home</HeaderLink>
           <HeaderLink component={NavLink} to="/users">Users</HeaderLink>
-          <HeaderLink component={NavLink} to="/users">Blog</HeaderLink>
+          <HeaderLink component={NavLink} to="/properties">Properties</HeaderLink>
         </nav>
         <ThemeSwitch />
       </Toolbar>
