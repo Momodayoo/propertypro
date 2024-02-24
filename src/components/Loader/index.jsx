@@ -1,22 +1,19 @@
-/**
- *
- * Loader
- *
- */
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
 
-export function Loader() {
+export const Loader = () => {
   return (
     <Box
       sx={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 200,
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100%",
       }}
     >
       <CircularProgress />
     </Box>
   );
 }
+
+export default Loader;

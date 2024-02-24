@@ -1,21 +1,17 @@
-import { useReducer, useEffect } from "react";
+import { useEffect, useReducer } from "react";
 import List from "@mui/material/List";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import IconButton from "@mui/material/IconButton";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { ListItemSecondaryAction } from "@mui/material";
+import ListItemSecondaryAction from "@mui/material/ListItemSecondaryAction";
+import Grid from '@mui/material/Grid';
 import Alert from "@mui/material/Alert";
-import Grid from "@mui/material/Grid";
-import { Loader } from "../../components/Loader";
+import Loader from "../../components/Loader";
 import { userReducer, initialState } from "./userReducer";
 
 const UserManager = () => {
-  const [state, dispatch] = useReducer(userReducer, initialState);
-  /* const [users, setUsers] = useState([]);
-  const [selectedUser, setSelectedUser] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null); */
+    const [state, dispatch] = useReducer(userReducer, initialState);
 
   useEffect(() => {
     dispatch({ type: "FETCH_USERS_REQUEST" });
@@ -25,30 +21,26 @@ const UserManager = () => {
         // console.log(data);
         switch (data.result) {
           case 200:
-            // console.log("200");
             dispatch({ type: "FETCH_USERS_SUCCESS", payload: data.data });
             break;
           case 404:
-            // console.log("404");
-            dispatch({ type: "FETCH_USERS_FAILURE", payload: data.message });
+            dispatch({ type: "FETCH_USERS_FAILURE", payload: "Endpoint not found" });
             break;
           case 500:
-            // console.log("500");
             dispatch({ type: "FETCH_USERS_FAILURE", payload: data.message });
             break;
           default:
-            // console.log("default");
-            dispatch({ type: "FETCH_USERS_FAILURE", payload: data.message });
+            dispatch({ type: "FETCH_USERS_FAILURE", payload: "Something went wrong. Please try again later." });
             break;
         }
         // TODO: handle all the possible responses
-      })
-      .catch(() => {
-        dispatch({
-          type: "FETCH_USERS_FAILURE",
-          payload: "Something went wrong. Please try again later.",
-        });
-      });
+      }).catch((error) => {
+        console.error("Error fetching users", error);
+        dispatch({ type: "FETCH_USERS_FAILURE", payload: "Something went wrong. Please try again later." });
+      }).finally(() => {
+        //;
+      }
+    );
   }, []);
 
   const UserList = () => {
@@ -63,24 +55,30 @@ const UserManager = () => {
       if (!deleteUser) {
         return false;
       }
-      dispatch({ type: "DELETE_USERS_REQUEST" });
+      dispatch({ type: "DELETE_USER_REQUEST" });
       const id = event.currentTarget.dataset.id;
       fetch(`http://localhost:3000/api/users/${id}`, {
         method: "DELETE",
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log(data);
+          // console.log(data);
           if (data.result === 200) {
-            dispatch({ type: "DELETE_USERS_SUCCESS", payload: state.users.filter((user) => user.id != parseInt(id) ) });
+            dispatch({ type: "DELETE_USER_SUCCESS", payload: id });
           }
-        }).catch(() => {
-          dispatch({ type: "DELETE_USERS_FAILURE", payload: "Something went wrong. Please try again later." });
-        });
-    };
+        }).catch((error) => {
+          console.error("Error deleting user", error);
+          dispatch({ type: "DELETE_USER_FAILURE", payload: "Something went wrong. Please try again later." });
+        }).finally(() => {
+          // setLoading(false);
+        }
+      );
+      };
+
+
 
     return (
-      <List sx={{ width: "100%" }}>
+      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
         {state.users.map((user) => (
           <ListItemButton
             key={user.id}
@@ -90,15 +88,10 @@ const UserManager = () => {
           >
             <ListItemText primary={user.name} secondary={user.email} />
             <ListItemSecondaryAction>
-              <IconButton
-                edge="end"
-                aria-label="delete"
-                data-id={user.id}
-                onClick={deleteUser}
-              >
+              <IconButton edge="end" aria-label="delete" data-id={user.id} onClick={deleteUser}>
                 <DeleteIcon />
               </IconButton>
-            </ListItemSecondaryAction>
+          </ListItemSecondaryAction>
           </ListItemButton>
         ))}
       </List>
@@ -107,9 +100,9 @@ const UserManager = () => {
 
   return (
     <>
-      <Grid item xs={12} sm={6}>
-        {!state.loading ? <UserList /> : <Loader />}
-        {state.error && <Alert severity="error">{state.error}</Alert>}
+      <Grid item xs={12} sm={6}> 
+        {state.loading ? <Loader /> : <UserList />}
+        {state.error && <Alert severity="error">This is an error Alert.</Alert>}
       </Grid>
       <Grid item xs={12} sm={6}></Grid>
     </>
