@@ -49,6 +49,8 @@ const Login = () => {
             </Button>
             {loading && <Loader />}
             {error && <Alert severity="error" message={error} />}
+        <br></br>
+          <a href="/Register">Signup</a>   
         </form>
     );        
 };
