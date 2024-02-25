@@ -1,7 +1,11 @@
-const getUsers = async (dispatch) => {
+const getUsers = async (dispatch, token) => {
   dispatch({ type: "FETCH_USERS_REQUEST" });
   try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}/users`);
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/users`, {
+      headers: {
+        Authorization: `${token}`,
+      },
+    });
     const data = await response.json();
     switch (data.result) {
       case 200:

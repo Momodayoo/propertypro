@@ -7,20 +7,22 @@ import Alert from "@mui/material/Alert";
 import { Outlet, useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
 import { useUser, getUsers } from "./UserContext";
+import { useAuth } from "../AuthManager/AuthContext";
 
 const UserManager = () => {
   const {
     state: { users, selectedUser, loading, error },
     dispatch,
   } = useUser().value;
+  const { state: { token } } = useAuth().value;
   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchData() {
-      getUsers(dispatch);
+      getUsers(dispatch, token);
     }
     fetchData();
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   const UserList = () => {
     const handleListItemClick = (event) => {
