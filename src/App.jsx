@@ -2,11 +2,15 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./layouts";
 import Home from "./pages/Home";
 import Users from "./pages/Users";
+import Property from "./pages/Property";
+import Posts from "./pages/Posts";
+
 import UserInfo from "./features/UserManager/components/UserInfo";
 import UserDetail from "./features/UserManager/components/UserDetail";
 import UserEdit from "./features/UserManager/components/UserEdit";
 import UserAdd from "./features/UserManager/components/UserAdd";
-import Posts from "./pages/Posts";
+
+
 
 const router = createBrowserRouter([
   {
@@ -18,9 +22,10 @@ const router = createBrowserRouter([
         { path: "/users", element: <UserInfo /> },
         { path: "/users/add", element: <UserAdd />},
         { path: "/users:id", element: <UserDetail /> },
-        { path: "/users:id/edit", element: <UserEdit /> }
+        { path: "/users:id/edit", element: <UserEdit /> },
       ] },
-      { path: "posts", element: <Posts /> }
+      { path: "posts", element: <Posts /> },
+      { path: "/Property", element: <Property /> },
     ],
   },
 ]);

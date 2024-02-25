@@ -44,7 +44,7 @@ const Header = () => {
         <nav>
           <HeaderLink component={NavLink} to="/">Home</HeaderLink>
           <HeaderLink component={NavLink} to="/users">Users</HeaderLink>
-          <HeaderLink component={NavLink} to="/posts">Post</HeaderLink>
+          <HeaderLink component={NavLink} to="/Property">Property</HeaderLink>
         </nav>
         <ThemeSwitch />
       </Toolbar>
