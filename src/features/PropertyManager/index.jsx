@@ -1,42 +1,64 @@
-import React, { useContext, useEffect } from "react";
-import { PropertyContext } from "../../pages/Property";
-import Box from "@mui/material/Box";
+import { useEffect } from "react";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Grid from "@mui/material/Grid";
 import Alert from "@mui/material/Alert";
-import PropertyList from "../../components/PropertyList";
+import { Outlet, useNavigate } from "react-router-dom";
+import Loader from "../../components/Loader";
+import {useProperty, getProperties} from "./PropertyContext";
+import { useAuth } from "../AuthManager/AuthContext";
 
-function PropertyManager() {
-  const { state, dispatch } = useContext(PropertyContext);
+const PropertyManager = () => {
+    const {
+        state: { property, selectedProperty, loading, error },
+        dispatch,
+    } = useProperty().value;
+    const { state: { token } } = useAuth().value;
+    const navigate = useNavigate();
 
-  useEffect(() => {
-    fetch(`${import.meta.env.VITE_REACT_APP_SERVER_URL}/api/property`)
-      .then((response) => response.json())
-      .then((propertyData) => {
-        switch (propertyData.result) {
-          case 200:
-            dispatch({ type: "GET_PROPERTY_SUCCESS", payload: propertyData.data });
-            break;
-          case 404:
-            dispatch({ type: "GET_PROPERTY_FAILURE", payload: propertyData.message });
-            break;
-          case 500:
-            dispatch({ type: "GET_PROPERTY_FAILURE", payload: propertyData.message });
-            break;
-          default:
-            dispatch({ type: "GET_PROPERTY_FAILURE", payload: propertyData.message });
-            break;
+    useEffect(() => {    
+        async function fetchData() {
+            getProperties(dispatch, token);
         }
-      })
-      .catch((error) =>
-        dispatch({ type: "GET_PROPERTY_FAILURE", payload: error.message })
-      );
-  }, []);
+        fetchData();
+    }, [dispatch, token]);
 
-  return (
-    <Box sx={{ paddingTop: 2, paddingBottom: 2, paddingRight: 2 }}>
-      {state.error && <Alert severity="error">{state.error}</Alert>}
-      <PropertyList property={state.property}/>
-    </Box>
-  );
-}
+    const PropertyList = () => {
+        const handleListItemClick = (event) => {
+            event.preventDefault();
+            const id = event.currentTarget.dataset.id;
+            dispatch({ type: "SELECT_PROPERTY", payload: id });
+            navigate(`/Property/${id}`);
+        };
+
+        return (
+            <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+                {property.map((property) => (
+                    <ListItemButton
+                        key={property.id}
+                        selected={selectedProperty === property.id.toString()}
+                        onClick={handleListItemClick}
+                        data-id={property.id}
+                    >
+                        <ListItemText primary={property.name} secondary={property.address} />
+                    </ListItemButton>
+                ))}
+            </List>
+        );
+    };  
+
+    return (
+        <Grid container spacing={2}>
+            <Grid item xs={12} sm={6}>
+                {loading ? <Loader /> : <PropertyList />}
+                {error && <Alert severity="error">This is an error Alert.</Alert>}
+            </Grid>
+            <Grid item xs={12} sm={6}>
+                <Outlet />
+            </Grid>
+        </Grid>
+    );
+};
 
 export default PropertyManager;

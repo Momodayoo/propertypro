@@ -1,27 +1,29 @@
-import { createContext, useReducer } from "react";
-// import { useContext, useEffect } from "react";
-// import { layoutContext } from "../../layouts";
-import GridItem from "../../components/GridItem";
-import PropertyManager from "../../features/PropertyManager";
-import { initialState, propertyReducer } from "../../features/PropertyManager/propertyReducer";
 
-export const PropertyContext = createContext();
+import Grid from "@mui/material/Grid";
+import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
+import Typography from "@mui/material/Typography";
+import PropertyManager from "../../features/PropertyManager/archive";
 
-function Property() {
-    // const { setPageTitle } = useContext(layoutContext);
-    const [ state, dispatch ] = useReducer(propertyReducer, initialState);
+const Property = () => {
+  return (
+    <Grid container>
+      <Grid item xs={12} sm={6}>
+        <Typography variant="h4">Property</Typography>
+      </Grid>
+      <Grid item xs={12} sm={6} container justifyContent={'flex-end'}>
+        <Link to="/Property/add">
+          <Button variant="outlined" startIcon={<PersonAddAltIcon />}>
+            Add Property
+          </Button>
+        </Link>
+      </Grid>
+      <Grid item xs={12}>
+        <PropertyManager />
+      </Grid>
+    </Grid>
+  );
+};
 
-    // useEffect(() => {
-    //     setPageTitle('Browse Property');
-    // }, [setPageTitle]);
-
-    return (
-        <GridItem>
-            <PropertyContext.Provider value={{ state, dispatch }}>
-                <PropertyManager />
-            </PropertyContext.Provider>
-        </GridItem>
-    );
-}
-
-export default Property
+export default Property;

@@ -5,11 +5,18 @@ import Users from "./pages/Users";
 import Property from "./pages/Property";
 import Posts from "./pages/Posts";
 
-
+//UserManager components
 import UserInfo from "./features/UserManager/components/UserInfo";
 import UserDetail from "./features/UserManager/components/UserDetail";
 import UserEdit from "./features/UserManager/components/UserEdit";
 import UserAdd from "./features/UserManager/components/UserAdd";
+
+//PropertyManager components
+import PropertyInfo from "./features/PropertyManager/components/PropertyInfo";
+import PropertyDetail from "./features/PropertyManager/components/PropertyDetail";
+import PropertyEdit from "./features/PropertyManager/components/PropertyEdit";
+import PropertyAdd from "./features/PropertyManager/components/PropertyAdd";
+
 import Register from "./features/AuthManager/components/Register/Register";
 
 
@@ -30,7 +37,12 @@ const router = createBrowserRouter([
         { path: "/users:id/edit", element: <UserEdit /> },
       ] },
       { path: "posts", element: <Posts /> },
-      { path: "/Property", element: <Property /> },
+      { path: "/Property", element: <Property />, children: [
+        { path: "/Property", element: <PropertyInfo /> },
+        { path: "/Property/add", element: <PropertyAdd />},
+        { path: "/Property:id", element: <PropertyDetail /> },
+        { path: "/Property:id/edit", element: <PropertyEdit /> },
+      ] },
     ],
   },
 ]);
