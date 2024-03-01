@@ -10,22 +10,21 @@ export const initialState = {
 
 export const propertyReducer = (state = initialState, action) => {
     switch (action.type) {
-        case 'FETCH_PROPERTY_REQUEST':
+        case "FETCH_ALL_PROPERTY_REQUEST":
             return {
                 ...state,
                 loading: true,
                 error: null,
             };
-        case 'FETCH_PROPERTY_SUCCESS':
+        case "FETCH_ALL_PROPERTY_SUCCESS":
             return {
                 ...state,
-                property: action.payload,
+               property: action.payload.data,
                 loading: false,
             };
-        case "FETCH_PROPERTY_FAILURE":
+        case "FETCH_ALL_PROPERTY_FAILURE":
             return {
                 ...state,
-                property: [],
                 error: action.payload,
                 loading: false,
             };
@@ -79,7 +78,7 @@ export const propertyReducer = (state = initialState, action) => {
         case "UPDATE_PROPERTY_SUCCESS":
             return {
                 ...state,
-                property: state.property.map((property) => 
+                property: state.property.map((property) =>
                     property.id === action.payload.id ? action.payload : property
                 ),
                 itemLoading: false,
@@ -107,8 +106,8 @@ export const propertyReducer = (state = initialState, action) => {
                 ...state,
                 itemError: action.payload,
                 itemLoading: false,
-            };    
+            };
         default:
-            return state
+            return state;
     }
 }

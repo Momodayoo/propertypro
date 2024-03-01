@@ -6,59 +6,60 @@ import Grid from "@mui/material/Grid";
 import Alert from "@mui/material/Alert";
 import { Outlet, useNavigate } from "react-router-dom";
 import Loader from "../../components/Loader";
-import {useProperty, getProperties} from "./PropertyContext";
+import { useProperty, getAllProperty, selectProperty } from "./PropertyContext";
 import { useAuth } from "../AuthManager/AuthContext";
 
+
 const PropertyManager = () => {
-    const {
-        state: { property, selectedProperty, loading, error },
-        dispatch,
-    } = useProperty().value;
-    const { state: { token } } = useAuth().value;
-    const navigate = useNavigate();
+  const {
+    state: { loading, property, selectedProperty, error},
+    dispatch,
+  } = useProperty().value;
+  const { state: { token } } = useAuth().value;
+ const navigate = useNavigate();
 
-    useEffect(() => {    
-        async function fetchData() {
-            getProperties(dispatch, token);
-        }
-        fetchData();
-    }, [dispatch, token]);
 
-    const PropertyList = () => {
-        const handleListItemClick = (event) => {
-            event.preventDefault();
-            const id = event.currentTarget.dataset.id;
-            dispatch({ type: "SELECT_PROPERTY", payload: id });
-            navigate(`/Property/${id}`);
-        };
+  useEffect(() => { 
+    getAllProperty(dispatch, token);
+  }, [dispatch, token]);
 
-        return (
-            <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-                {property.map((property) => (
+  const handleListItemClick = (event) => {
+      event.preventDefault();
+      const id = event.currentTarget.dataset.id;
+      selectProperty(dispatch, id);
+      dispatch({ type: "SELECT_PROPERTY", payload: id });
+      navigate(`/property/${id}`);
+    };
+console.log(property);
+  const PropertyList = () =>  
+  (
+      <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+                {property.map((pro) => (
+                  
                     <ListItemButton
-                        key={property.id}
-                        selected={selectedProperty === property.id.toString()}
+                    
+                        key={pro.id}
+                        selected={selectedProperty === pro.id.toString()}
                         onClick={handleListItemClick}
-                        data-id={property.id}
-                    >
-                        <ListItemText primary={property.name} secondary={property.address} />
+                        data-id={pro.id}
+                >
+                        <ListItemText primary={pro.profile} secondary={pro.type} /> {/* check this line whether changed from user.name and user.email, change to property image or email or profile*/}
                     </ListItemButton>
                 ))}
             </List>
         );
-    };  
 
-    return (
-        <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-                {loading ? <Loader /> : <PropertyList />}
-                {error && <Alert severity="error">This is an error Alert.</Alert>}
-            </Grid>
-            <Grid item xs={12} sm={6}>
-                <Outlet />
-            </Grid>
-        </Grid>
-    );
+  return (
+    <Grid container spacing={2}>
+      <Grid item xs={12} sm={6}>
+        {loading ? <Loader /> : <PropertyList />}
+        {error && <Alert severity="error">This is an error Alert.</Alert>}
+      </Grid>
+      <Grid item xs={12} sm={6}>
+        <Outlet />
+      </Grid>
+    </Grid>
+  );
 };
 
 export default PropertyManager;

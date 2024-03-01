@@ -1,6 +1,5 @@
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-import Logo from '../../images/logo.png';
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import Button from '@mui/material/Button';
@@ -38,13 +37,16 @@ const Header = () => {
     <AppBar position="static">
       <Toolbar>
         <LogoLink component={RouterLink} to="/">
-          <LogoImg src={Logo} alt="PropertyPro" />
+        
           <Typography variant="h6" component="div" sx={{ display: { xs: 'none', sm: 'flex' } }}>Property Pro</Typography>
         </LogoLink>
         <nav>
-          <HeaderLink component={NavLink} to="/">Home</HeaderLink>
+          <HeaderLink component={NavLink} to="/"></HeaderLink>
+          <HeaderLink component={NavLink} to="/Home"></HeaderLink>
           <HeaderLink component={NavLink} to="/users">Users</HeaderLink>
           <HeaderLink component={NavLink} to="/Property">Property</HeaderLink>
+          <HeaderLink component={NavLink} to="/Posts">Market</HeaderLink>
+          <HeaderLink component={NavLink} to="/">Log out</HeaderLink>
         </nav>
         <ThemeSwitch />
       </Toolbar>

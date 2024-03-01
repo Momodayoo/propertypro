@@ -1,7 +1,10 @@
+import PropertyList from "../../features/Posts/components";
+
 const Posts = () => {
     return (
         <div>
-            <h1>Posts</h1>
+            <h1>Property on market</h1>
+            <PropertyList />
         </div>
     );
 }

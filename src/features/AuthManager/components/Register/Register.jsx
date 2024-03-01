@@ -3,13 +3,13 @@ import { TextField, Button, Container, Stack } from '@mui/material';
 import { Link } from "react-router-dom"
 
 
+
  
  
 const Register = () => {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
-    const [dateOfBirth, setDateOfBirth] = useState('')
     const [password, setPassword] = useState('')
  
     function handleSubmit(event) {
@@ -65,17 +65,7 @@ const Register = () => {
                     fullWidth
                     sx={{mb: 4}}
                 />
-                <TextField
-                    type="date"
-                    variant='outlined'
-                    color='secondary'
-                    label="Date of Birth"
-                    onChange={e => setDateOfBirth(e.target.value)}
-                    value={dateOfBirth}
-                    fullWidth
-                    required
-                    sx={{mb: 4}}
-                />
+             
                 <Button variant="outlined" color="secondary" type="submit">Sign Up</Button>
             </form>
             <small>Already have an account? <Link to="/">Login Here</Link></small>

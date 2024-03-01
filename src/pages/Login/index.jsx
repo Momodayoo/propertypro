@@ -1,6 +1,8 @@
+import React from 'react';
+import Login from '../../features/AuthManager/components/Login/Login';
 import logo from '../../images/logo.png';
 
-const Home = () => {
+const LoginPage = () => {
   return (
     <div style={{ position: 'relative' }}>
       {/* Background Logo */}
@@ -14,11 +16,11 @@ const Home = () => {
           <img src={logo} alt="Logo" style={{ width: '300px', height: '300px' }} />
         </div>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '200px' }}>
-          <h1>Login Successful</h1>
-        </div>
+            <h1><Login/></h1>
+            </div>
       </div>
     </div>
-  );
-};
+    );
+}
 
-export default Home;
+export default LoginPage;

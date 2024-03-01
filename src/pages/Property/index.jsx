@@ -1,10 +1,10 @@
 
 import Grid from "@mui/material/Grid";
-import PersonAddAltIcon from "@mui/icons-material/PersonAddAlt";
+import AddHomeIcon from '@mui/icons-material/AddHome';;
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
-import PropertyManager from "../../features/PropertyManager/archive";
+import PropertyManager from "../../features/PropertyManager";
 
 const Property = () => {
   return (
@@ -14,7 +14,7 @@ const Property = () => {
       </Grid>
       <Grid item xs={12} sm={6} container justifyContent={'flex-end'}>
         <Link to="/Property/add">
-          <Button variant="outlined" startIcon={<PersonAddAltIcon />}>
+          <Button variant="outlined" startIcon={<AddHomeIcon />}>
             Add Property
           </Button>
         </Link>

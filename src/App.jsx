@@ -4,6 +4,12 @@ import Home from "./pages/Home";
 import Users from "./pages/Users";
 import Property from "./pages/Property";
 import Posts from "./pages/Posts";
+import LoginPage from "./pages/Login";
+
+
+//Login
+import Register from "./features/AuthManager/components/Register/Register";
+
 
 //UserManager components
 import UserInfo from "./features/UserManager/components/UserInfo";
@@ -17,8 +23,6 @@ import PropertyDetail from "./features/PropertyManager/components/PropertyDetail
 import PropertyEdit from "./features/PropertyManager/components/PropertyEdit";
 import PropertyAdd from "./features/PropertyManager/components/PropertyAdd";
 
-import Register from "./features/AuthManager/components/Register/Register";
-
 
 
 
@@ -28,26 +32,31 @@ const router = createBrowserRouter([
     path: "/",
     element: <Layout />,
     children: [
-      { path: "/", element: <Home /> },
+      { path: "/", element: <LoginPage /> },
+      { path: "/Home", element: <Home />},
       { path: "/Register", element: <Register /> },
+      { path: "/Posts", element: <Posts />},
       { path: "/users", element: <Users />, children: [
         { path: "/users", element: <UserInfo /> },
         { path: "/users/add", element: <UserAdd />},
         { path: "/users:id", element: <UserDetail /> },
         { path: "/users:id/edit", element: <UserEdit /> },
       ] },
-      { path: "posts", element: <Posts /> },
-      { path: "/Property", element: <Property />, children: [
-        { path: "/Property", element: <PropertyInfo /> },
-        { path: "/Property/add", element: <PropertyAdd />},
-        { path: "/Property:id", element: <PropertyDetail /> },
-        { path: "/Property:id/edit", element: <PropertyEdit /> },
+       { path: "/property", element: <Property />, 
+       children: [
+        { path: "/property", element: <PropertyInfo/> },
+        { path: "/property/add", element: <PropertyAdd />},
+        { path: "/property:id", element: <PropertyDetail /> },
+        { path: "/property:id/edit", element: <PropertyEdit /> },
+      
+     
       ] },
     ],
+  
   },
-]);
+]);    
 
-function App() {
+    function App() {
   return <RouterProvider router={router} />;
 }
 

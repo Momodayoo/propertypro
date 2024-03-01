@@ -1,7 +1,7 @@
 const PropertyInfo = () => {
     return (
         <div>
-            <p>Here is the property info</p>
+            <p>Here are your property</p>
         </div>
     );
 }
