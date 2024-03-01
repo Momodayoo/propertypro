@@ -31,7 +31,11 @@ const PropertyAdd = () => {
   };
 
   return itemLoading ? (
+    <>
     <Loader />
+    <p>hello!@@</p>
+    </>
+    
   ) : itemError ? (
     <Alert severity="error" message={itemError} />
   ) : (
@@ -86,7 +90,7 @@ const PropertyAdd = () => {
         id="profile"
         name="profile"
         label="Required"
-        placeholder="Give a the best title for your property"
+        placeholder="Give the best title for your property"
         margin="normal"
         />
       <Button type="submit" variant="outlined">

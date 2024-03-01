@@ -10,7 +10,7 @@ const Property = () => {
   return (
     <Grid container>
       <Grid item xs={12} sm={6}>
-        <Typography variant="h4">Property</Typography>
+        <Typography variant="h4"> Property</Typography>
       </Grid>
       <Grid item xs={12} sm={6} container justifyContent={'flex-end'}>
         <Link to="/Property/add">

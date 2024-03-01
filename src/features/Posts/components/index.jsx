@@ -3,6 +3,7 @@ import Box from '@mui/material/Box'; // Add this line
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import FavoriteBorderTwoToneIcon from '@mui/icons-material/FavoriteBorderTwoTone';
+import PropertyCard from '../../PropertyManager/components/PropertyCard';
 
 // Your component code here
 
@@ -151,37 +152,13 @@ const fetchData = async () => {
       </select><br /> <br />
       {/* <h1>Property List</h1> */}
       {properties.map(property => (
-        <Box key={property.id} sx={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px' }}>
-          {property.image && <img
-  src={`${import.meta.env.VITE_IMAGE_URL}/${property.image}`}
-  alt="Property"
-  style={{ display: 'block', margin: 'auto', maxWidth: '400px', maxHeight: '400px' }}
-/>
-}
-
-          <br />
-          <strong>Name:</strong> {property.profile}<br />
-          <strong>Type:</strong> {property.type}<br />
-          <strong>Location:</strong> {property.address}<br />
-          <strong>Price:</strong> ${property.price}<br />
-          <strong>Description:</strong> {property.description}<br />
-          <strong>Owner:</strong> {users[property.userId] || 'Unknown'}<br />
-          <strong>Contact:</strong> {users.email}<br />
-
-          <Button onClick={() => handleLike(property.id)}>
-            <FavoriteBorderTwoToneIcon />
-          </Button>
-          <span>{property.likes || 0}</span>
-          <br />
-          <TextField
-            label="Add a comment"
-            variant="outlined"
-            value={comments[property.id] || ''}
-            onChange={(event) => handleCommentChange(event, property.id)}
-            sx={{ marginTop: '10px', width: '100%' }}
-          />
-          <Button onClick={() => handleAddComment(property.id)}>Add Comment</Button>
-        </Box>
+        <PropertyCard 
+          key={property.id}
+          property={property} 
+          comments={comments} 
+          handleCommentChange={handleCommentChange}
+          handleAddComment={handleAddComment}
+          handleLike={handleLike} />
       ))}
     </div>
   );
