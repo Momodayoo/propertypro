@@ -30,15 +30,19 @@ const PropertyCard = ({property, comments, handleCommentChange, handleAddComment
                 style={{ display: 'block', margin: 'auto', maxWidth: '400px', maxHeight: '400px' }}
                 />
             }
-
             <br />
-            <strong>Name:</strong> {property.profile}<br />
+
+            <strong>Profile:</strong> {property.profile}<br />
             <strong>Type:</strong> {property.type}<br />
             <strong>Location:</strong> {property.address}<br />
             <strong>Price:</strong> ${property.price}<br />
-            <strong>Description:</strong> {property.description}<br />
-            <strong>Owner:</strong> {userData.name}<br />
-            <strong>Contact:</strong> {userData.email}<br />
+
+            {userData && (
+                <>
+                    <strong>Owner:</strong> {userData.name}<br />
+                    <strong>Contact:</strong> {userData.email}<br />
+                </>
+            )}
 
             <Button onClick={() => handleLike(property.id)}>
                 <FavoriteBorderTwoToneIcon />
@@ -53,7 +57,10 @@ const PropertyCard = ({property, comments, handleCommentChange, handleAddComment
                 sx={{ marginTop: '10px', width: '100%' }}
             />
             <Button onClick={() => handleAddComment(property.id)}>Add Comment</Button>
-        </Box> 
+        </Box>      
+
+
+        
     );
 }
 

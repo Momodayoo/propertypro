@@ -5,6 +5,7 @@ import Users from "./pages/Users";
 import Property from "./pages/Property";
 import Posts from "./pages/Posts";
 import LoginPage from "./pages/Login";
+import Signout from "./pages/Logout";
 
 
 //Login
@@ -36,6 +37,7 @@ const router = createBrowserRouter([
       { path: "/Home", element: <Home />},
       { path: "/Register", element: <Register /> },
       { path: "/Posts", element: <Posts />},
+      { path: "/Logout", element: <Signout /> },
       { path: "/users", element: <Users />, children: [
         { path: "/users", element: <UserInfo /> },
         { path: "/users/add", element: <UserAdd />},
